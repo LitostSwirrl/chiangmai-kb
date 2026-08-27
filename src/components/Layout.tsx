@@ -1,10 +1,32 @@
+import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet } from 'react-router'
+import { SearchDialog } from './SearchDialog'
 import { VerticalLabel } from './VerticalLabel'
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
   `vertical-label max-md:[writing-mode:horizontal-tb] max-md:tracking-[0.2em] text-sm ${isActive ? 'text-accent font-medium' : 'text-ink hover:text-accent'}`
 
 export function Layout() {
+  const [searchOpen, setSearchOpen] = useState(false)
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(o => !o)
+      }
+    }
+    const onClick = (e: MouseEvent) => {
+      if (e.target instanceof Element && e.target.closest('[data-search-button]')) setSearchOpen(true)
+    }
+    window.addEventListener('keydown', onKey)
+    document.addEventListener('click', onClick)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.removeEventListener('click', onClick)
+    }
+  }, [])
+
   return (
     <div className="min-h-screen bg-paper text-ink md:pl-16">
       <header className="fixed inset-y-0 left-0 z-40 hidden w-16 flex-col items-center justify-between border-r border-line bg-paper py-6 md:flex">
@@ -46,6 +68,7 @@ export function Layout() {
         </nav>
       </header>
       <Outlet />
+      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
     </div>
   )
 }
