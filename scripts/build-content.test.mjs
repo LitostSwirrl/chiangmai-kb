@@ -52,6 +52,35 @@ describe('parseNote', () => {
   })
 })
 
+const HUB = `---
+tags: [歷史, hub]
+---
+# 歷史
+
+前言第一段提到[[蘭納王國]]。
+
+前言第二段。
+
+## 條目
+- [[蘭納王國]] — 北方王國五百年興衰
+`
+
+describe('parseNote hub', () => {
+  const h = parseNote('10-歷史/歷史.md', HUB)
+  it('無內文節時 body 取前言段落', () => {
+    expect(h.isHub).toBe(true)
+    expect(h.body.length).toBe(2)
+    expect(h.body[0]).toEqual([
+      { t: 'text', v: '前言第一段提到' },
+      { t: 'link', target: '蘭納王國', label: '蘭納王國' },
+      { t: 'text', v: '。' },
+    ])
+  })
+  it('條目節作為 related', () => {
+    expect(h.related).toEqual(['蘭納王國'])
+  })
+})
+
 describe('buildAll', () => {
   it('反向連結帶引用句、斷鏈丟錯', () => {
     const other = parseNote('10-歷史/孟萊王與清邁建城.md', SAMPLE.replaceAll('蘭納王國（ล้านนา）', '孟萊王與清邁建城').replaceAll('[[孟萊王與清邁建城]]', '[[蘭納王國]]'))

@@ -22,18 +22,20 @@ html {
   font-family: var(--font-sans);
 }
 
-.outline-text {
-  font-family: var(--font-en);
-  font-weight: 900;
-  letter-spacing: 0.02em;
-  -webkit-text-stroke: 1.5px var(--color-ink);
-  color: transparent;
-  transition: color 0.3s ease;
-}
+@layer components {
+  .outline-text {
+    font-family: var(--font-en);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    -webkit-text-stroke: 1.5px var(--color-ink);
+    color: transparent;
+    transition: color 0.3s ease;
+  }
 
-.vertical-label {
-  writing-mode: vertical-rl;
-  letter-spacing: 0.35em;
+  .vertical-label {
+    writing-mode: vertical-rl;
+    letter-spacing: 0.35em;
+  }
 }
 
 :focus-visible {

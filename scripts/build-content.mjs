@@ -29,11 +29,16 @@ export function parseNote(relPath, text) {
     if (last < para.length) out.push({ t: 'text', v: para.slice(last) })
     return out
   }
-  const body = section('內文').split(/\n\n+/).filter(Boolean).map(segs)
+  const preamble = text.split(/\n## /)[0]
+    .replace(/^---[\s\S]*?---\n/, '')
+    .replace(/^# .+$/m, '')
+    .replace(/^一行摘要：.+$/m, '')
+    .trim()
+  const body = (section('內文') || preamble).split(/\n\n+/).filter(Boolean).map(segs)
   const vocab = section('相關語彙與可用句').split('\n').filter(l => l.startsWith('|')).slice(2)
     .map(l => l.split('|').map(c => c.trim()).filter(Boolean))
     .map(([thai_, paiboon, zh, usage]) => ({ thai: thai_, paiboon, zh, usage }))
-  const related = [...section('相關條目').matchAll(WIKILINK)].map(mm => mm[1].trim())
+  const related = [...(section('相關條目') || section('條目')).matchAll(WIKILINK)].map(mm => mm[1].trim())
   const sources = [...section('來源').matchAll(/- \[([^\]]+)\]\(([^)]+)\)/g)].map(mm => ({ label: mm[1], url: mm[2] }))
   const outlinks = [...new Set([...text.matchAll(WIKILINK)].map(mm => mm[1].trim()))]
   const isHub = /hub/.test(text.match(/^tags: \[(.+)\]$/m)?.[1] ?? '')

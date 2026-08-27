@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import { Layout } from './components/Layout'
 import { OutlineTitle } from './components/OutlineTitle'
+import { AxisPage } from './pages/AxisPage'
+import { HomePage } from './pages/HomePage'
 
 function Placeholder({ text }: { text: string }) {
   return (
@@ -15,8 +17,8 @@ const router = createBrowserRouter(
     {
       element: <Layout />,
       children: [
-        { path: '/', element: <Placeholder text="Chiang Mai" /> },
-        { path: '/axis/:dir', element: <Placeholder text="Axis" /> },
+        { path: '/', element: <HomePage /> },
+        { path: '/axis/:dir', element: <AxisPage /> },
         { path: '/note/:id', element: <Placeholder text="Note" /> },
         { path: '/graph', element: <Placeholder text="Graph" /> },
       ],
