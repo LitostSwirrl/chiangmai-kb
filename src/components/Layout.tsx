@@ -30,7 +30,7 @@ export function Layout() {
   return (
     <div className="min-h-screen bg-paper text-ink md:pl-16">
       <header className="fixed inset-y-0 left-0 z-40 hidden w-16 flex-col items-center justify-between border-r border-line bg-paper py-6 md:flex">
-        <Link to="/" className="font-en text-sm font-extrabold tracking-widest" aria-label="回首頁">
+        <Link to="/" className="font-en text-sm font-extrabold tracking-widest" aria-label="CM 回首頁">
           CM
         </Link>
         <nav className="flex flex-col items-center gap-10">
@@ -52,7 +52,7 @@ export function Layout() {
         <VerticalLabel text="清邁知識庫" className="text-xs text-ink-soft" />
       </header>
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-line bg-paper px-5 py-3 md:hidden">
-        <Link to="/" className="font-en text-sm font-extrabold tracking-widest" aria-label="回首頁">
+        <Link to="/" className="font-en text-sm font-extrabold tracking-widest" aria-label="CM 回首頁">
           CM
         </Link>
         <nav className="flex items-center gap-6 text-sm">
