@@ -8,6 +8,7 @@
     "dev": "vite",
     "prebuild": "node scripts/build-content.mjs",
     "build": "tsc -b && vite build",
+    "pretest": "node scripts/build-content.mjs",
     "test": "vitest run",
     "lint": "oxlint",
     "preview": "vite preview"
