@@ -1,17 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import { Layout } from './components/Layout'
-import { OutlineTitle } from './components/OutlineTitle'
 import { AxisPage } from './pages/AxisPage'
+import { GraphPage } from './pages/GraphPage'
 import { HomePage } from './pages/HomePage'
 import { NotePage } from './pages/NotePage'
-
-function Placeholder({ text }: { text: string }) {
-  return (
-    <main className="px-6 py-16 md:px-14">
-      <OutlineTitle text={text} className="text-5xl md:text-7xl" />
-    </main>
-  )
-}
 
 const router = createBrowserRouter(
   [
@@ -21,7 +13,7 @@ const router = createBrowserRouter(
         { path: '/', element: <HomePage /> },
         { path: '/axis/:dir', element: <AxisPage /> },
         { path: '/note/:id', element: <NotePage /> },
-        { path: '/graph', element: <Placeholder text="Graph" /> },
+        { path: '/graph', element: <GraphPage /> },
       ],
     },
   ],

@@ -1,12 +1,28 @@
 import type { CSSProperties } from 'react'
 import { Link, useParams } from 'react-router'
+import { ForceGraph } from '../components/ForceGraph'
 import { NoteBody } from '../components/NoteBody'
 import { NoteLink } from '../components/NoteLink'
 import { VerticalLabel } from '../components/VerticalLabel'
-import { axisByName, getNote } from '../lib/content'
+import { axisByName, getNote, graph } from '../lib/content'
 
 function SectionTitle({ text }: { text: string }) {
   return <h2 className="font-en text-sm font-bold tracking-[0.25em] text-ink-soft">{text}</h2>
+}
+
+function LocalGraph({ id, outlinks, backlinks }: { id: string; outlinks: string[]; backlinks: string[] }) {
+  const ids = new Set([id, ...outlinks, ...backlinks])
+  const nodes = graph.nodes.filter(n => ids.has(n.id))
+  const links = graph.links.filter(l => ids.has(l.source) && ids.has(l.target))
+  if (nodes.length < 2) return null
+  return (
+    <section className="border-t border-line px-6 py-10 md:px-14">
+      <SectionTitle text="關係圖" />
+      <div className="mt-6 max-w-3xl border border-line">
+        <ForceGraph nodes={nodes} links={links} activeId={id} height={360} />
+      </div>
+    </section>
+  )
 }
 
 export function NotePage() {
@@ -91,6 +107,7 @@ export function NotePage() {
           </ul>
         )}
       </section>
+      <LocalGraph id={note.id} outlinks={note.outlinks} backlinks={note.backlinks.map(b => b.from)} />
       {note.sources.length > 0 && (
         <section className="border-t border-line px-6 py-10 md:px-14">
           <SectionTitle text="來源" />
