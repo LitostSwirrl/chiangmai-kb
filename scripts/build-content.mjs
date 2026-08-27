@@ -40,7 +40,7 @@ export function parseNote(relPath, text) {
     .map(l => l.split('|').map(c => c.trim()).filter(Boolean))
     .map(([thai_, paiboon, zh, usage]) => ({ thai: thai_, paiboon, zh, usage }))
   const related = [...(section('相關條目') || section('條目')).matchAll(WIKILINK)].map(mm => mm[1].trim())
-  const sources = [...section('來源').matchAll(/- \[([^\]]+)\]\(([^)]+)\)/g)].map(mm => ({ label: mm[1], url: mm[2] }))
+  const sources = [...section('來源').matchAll(/- \[([^\]]+)\]\((.+)\)/g)].map(mm => ({ label: mm[1], url: mm[2] }))
   const outlinks = [...new Set([...text.matchAll(WIKILINK)].map(mm => mm[1].trim()))]
   const isHub = /hub/.test(text.match(/^tags: \[(.+)\]$/m)?.[1] ?? '')
   return { id, axis, axisDir, title: h1, titleZh, thai, summary, body, vocab, related, sources, outlinks, backlinks: [], isHub }
