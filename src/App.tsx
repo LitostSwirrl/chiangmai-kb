@@ -3,6 +3,7 @@ import { Layout } from './components/Layout'
 import { OutlineTitle } from './components/OutlineTitle'
 import { AxisPage } from './pages/AxisPage'
 import { HomePage } from './pages/HomePage'
+import { NotePage } from './pages/NotePage'
 
 function Placeholder({ text }: { text: string }) {
   return (
@@ -19,7 +20,7 @@ const router = createBrowserRouter(
       children: [
         { path: '/', element: <HomePage /> },
         { path: '/axis/:dir', element: <AxisPage /> },
-        { path: '/note/:id', element: <Placeholder text="Note" /> },
+        { path: '/note/:id', element: <NotePage /> },
         { path: '/graph', element: <Placeholder text="Graph" /> },
       ],
     },

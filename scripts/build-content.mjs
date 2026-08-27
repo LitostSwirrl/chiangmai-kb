@@ -12,7 +12,6 @@ export function parseNote(relPath, text) {
   const m = h1.match(/^(.+?)（([^（）]+)）$/)
   const titleZh = m ? m[1] : h1
   const thai = m && /[฀-๿]/.test(m[2]) ? m[2] : null
-  const summary = (text.match(/^一行摘要：(.+)$/m) ?? [null, ''])[1]
   const section = name => {
     const re = new RegExp(`## ${name}\\n([\\s\\S]*?)(?=\\n## |$)`)
     const s = text.match(re)
@@ -35,6 +34,8 @@ export function parseNote(relPath, text) {
     .replace(/^一行摘要：.+$/m, '')
     .trim()
   const body = (section('內文') || preamble).split(/\n\n+/).filter(Boolean).map(segs)
+  const tagged = text.match(/^一行摘要：(.+)$/m)
+  const summary = tagged ? tagged[1] : section('內文') ? (preamble.split(/\n\n+/)[0] ?? '').trim() : ''
   const vocab = section('相關語彙與可用句').split('\n').filter(l => l.startsWith('|')).slice(2)
     .map(l => l.split('|').map(c => c.trim()).filter(Boolean))
     .map(([thai_, paiboon, zh, usage]) => ({ thai: thai_, paiboon, zh, usage }))

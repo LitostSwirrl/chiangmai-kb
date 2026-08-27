@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react'
 import { Link, useParams } from 'react-router'
+import { NoteBody } from '../components/NoteBody'
 import { OutlineTitle } from '../components/OutlineTitle'
 import { VerticalLabel } from '../components/VerticalLabel'
 import { axisByDir, getNote } from '../lib/content'
@@ -23,21 +24,7 @@ export function AxisPage() {
       </section>
       <section className="flex gap-6 px-6 py-10 md:gap-10 md:px-14 md:py-14">
         <VerticalLabel text="脈絡" className="hidden text-sm text-ink-soft md:block" />
-        <div className="max-w-2xl space-y-5 leading-loose">
-          {hub.body.map((para, i) => (
-            <p key={i}>
-              {para.map((s, j) =>
-                s.t === 'text' ? (
-                  s.v
-                ) : (
-                  <Link key={j} to={`/note/${s.target}`} className="underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent">
-                    {s.label}
-                  </Link>
-                ),
-              )}
-            </p>
-          ))}
-        </div>
+        <NoteBody body={hub.body} />
       </section>
       <section className="border-t border-line px-6 py-10 md:px-14 md:py-14">
         <h2 className="font-en text-sm font-bold tracking-[0.25em] text-ink-soft">條目</h2>

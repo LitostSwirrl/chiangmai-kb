@@ -52,6 +52,13 @@ describe('parseNote', () => {
   })
 })
 
+describe('parseNote 裸段落摘要', () => {
+  const n = parseNote('10-歷史/蘭納王國.md', SAMPLE.replace('一行摘要：孟萊王建立的北方王國。', '孟萊王建立的北方王國。'))
+  it('無前綴時取 H1 後首段', () => {
+    expect(n.summary).toBe('孟萊王建立的北方王國。')
+  })
+})
+
 const HUB = `---
 tags: [歷史, hub]
 ---
